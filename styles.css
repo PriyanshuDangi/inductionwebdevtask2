@@ -1,9 +1,49 @@
 body {
+  margin: 0;
+  box-sizing: border-box;
+}
+body > div {
   height: 100vh;
+  display: flex;
+  align-items: center;
+  background-color: #f2a870;
+  flex-flow: column;
+}
+.container {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #3bb0ba;
+  color: black;
+  padding: 0 10px 0 30px;
+  margin-top: 50px;
+  height: 300px;
+  width: 400px;
+  font-size: 24px;
 }
+.quiz #button {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+button {
+  padding: 7px 10px;
+  cursor: pointer;
+  font-weight: bolder;
+}
+#question {
+  font-weight: bold;
+}
+#message {
+  text-align: center;
+  font-size: 30px;
+}
+.result > div {
+  font-size: 30px;
+  text-align: center;
+  margin-top: 10px;
+}
+
 .green {
   background-color: green;
 }

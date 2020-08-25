@@ -7,23 +7,36 @@
     <link href="./styles.css" rel="stylesheet" />
   </head>
   <body>
-    <div class="start">
-      <div><button onclick="startQuiz()">Start The Quiz</button></div>
-    </div>
-    <div class="quiz none">
-      <div>
-        <div id="question"></div>
-        <div id="options"></div>
-        <div id="button">
-          <button onclick="previousQues()">Previous</button>
-          <button onclick="nextQues()">Next</button>
-          <button onclick="endQuiz()">End Quiz</button>
+    <div>
+      <div class="heading">
+        <h1>Covid 19 Quiz</h1>
+      </div>
+      <div class="container">
+        <div class="start">
+          <div><button onclick="startQuiz()">Start The Quiz</button></div>
+        </div>
+        <div class="quiz none">
+          <div>
+            <div id="question"></div>
+            <div id="options"></div>
+            <div id="message"></div>
+            <div id="button">
+              <div>
+                <button onclick="previousQues()">Previous</button>
+                <button onclick="nextQues()">Next</button>
+              </div>
+              <div><button onclick="endQuiz()">End Quiz</button></div>
+            </div>
+          </div>
+        </div>
+        <div class="result none">
+          <div id="info"></div>
+          <div id="score"></div>
+          <div id="restart">
+            <button onclick="restart()">Restart</button>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="result none">
-      <div id="info"></div>
-      <div id="score"></div>
     </div>
     <script src="script.js"></script>
   </body>
