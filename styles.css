@@ -7,18 +7,54 @@ body > div {
   display: flex;
   align-items: center;
   background-color: #f2a870;
-  flex-flow: column;
 }
+.sidenavbar {
+  width: 25%;
+  background-color: #e8824f;
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+#grid {
+  width: 70%;
+  margin-top: 70px;
+  background-color: #3bb0ba;
+  padding: 20px 10px 20px 30px;
+}
+#grid button {
+  font-size: 24px;
+  padding: 8px 12px;
+  margin: 10px 10px;
+  cursor: pointer;
+}
+
+.content {
+  height: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #3bb0ba;
   color: black;
-  padding: 0 10px 0 30px;
+  padding: 0 30px 0 30px;
   margin-top: 50px;
-  height: 300px;
-  width: 400px;
+  height: 350px;
+  width: 450px;
+  font-size: 24px;
+}
+form > div {
+  text-align: center;
+  margin: 20px;
+}
+form input {
   font-size: 24px;
 }
 .quiz #button {
@@ -26,7 +62,7 @@ body > div {
   justify-content: space-between;
   margin-top: 10px;
 }
-button {
+.content button {
   padding: 7px 10px;
   cursor: pointer;
   font-weight: bolder;
@@ -43,7 +79,12 @@ button {
   text-align: center;
   margin-top: 10px;
 }
-
+#highestScore {
+  margin-top: 40px;
+}
+#restart {
+  margin-top: 20px;
+}
 .green {
   background-color: green;
 }

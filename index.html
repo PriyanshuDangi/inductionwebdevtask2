@@ -8,32 +8,74 @@
   </head>
   <body>
     <div>
-      <div class="heading">
-        <h1>Covid 19 Quiz</h1>
-      </div>
-      <div class="container">
-        <div class="start">
-          <div><button onclick="startQuiz()">Start The Quiz</button></div>
+      <div class="sidenavbar">
+        <div class="heading">
+          <h1>Covid 19 Quiz</h1>
         </div>
-        <div class="quiz none">
-          <div>
-            <div id="question"></div>
-            <div id="options"></div>
-            <div id="message"></div>
-            <div id="button">
-              <div>
-                <button onclick="previousQues()">Previous</button>
-                <button onclick="nextQues()">Next</button>
-              </div>
-              <div><button onclick="endQuiz()">End Quiz</button></div>
-            </div>
+        <div id="grid">
+          <div id="information">
+            <h1>Play The Game</h1>
+          </div>
+          <div id="gridButtonContainer" class="none">
+            <!-- <button class="gridButton" onclick="gotoQues(0)">1</button>
+            <button class="gridButton" onclick="gotoQues(1)">2</button>
+            <button class="gridButton" onclick="gotoQues(2)">3</button>
+            <button class="gridButton" onclick="gotoQues(3)">4</button>
+            <button class="gridButton" onclick="gotoQues(4)">5</button>
+            <button class="gridButton" onclick="gotoQues(5)">6</button>
+            <button class="gridButton" onclick="gotoQues(6)">7</button>
+            <button class="gridButton" onclick="gotoQues(7)">8</button>
+            <button class="gridButton" onclick="gotoQues(8)">9</button>
+            <button class="gridButton" onclick="gotoQues(9)">10</button> -->
           </div>
         </div>
-        <div class="result none">
-          <div id="info"></div>
-          <div id="score"></div>
-          <div id="restart">
-            <button onclick="restart()">Restart</button>
+      </div>
+      <div class="content">
+        <div class="timer">
+          <h1>
+            Time Left :-
+            <span id="timer"
+              ><span id="minute">02</span>:<span id="second">00</span></span
+            >
+          </h1>
+        </div>
+        <div class="container">
+          <div class="start">
+            <form>
+              <div>
+                <input
+                  type="text"
+                  name="name"
+                  required
+                  id="name"
+                  placeholder="Enter Your Name"
+                  autofocus
+                />
+              </div>
+              <div><button>Start The Quiz</button></div>
+            </form>
+          </div>
+          <div class="quiz none">
+            <div>
+              <div id="question"></div>
+              <div id="options"></div>
+              <div id="message"></div>
+              <div id="button">
+                <div>
+                  <button onclick="previousQues()">Previous</button>
+                  <button onclick="nextQues()">Next</button>
+                </div>
+                <div><button onclick="endQuiz()">End Quiz</button></div>
+              </div>
+            </div>
+          </div>
+          <div class="result none">
+            <div id="info"></div>
+            <div id="timeTaken"></div>
+            <div id="highestScore"></div>
+            <div id="restart">
+              <button onclick="restart()">Restart</button>
+            </div>
           </div>
         </div>
       </div>

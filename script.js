@@ -1,5 +1,5 @@
 // all the questions
-let questions = [
+let question = [
   {
     ques: "Where the first case of coronavirus was found?",
     options: [
@@ -88,9 +88,14 @@ let questions = [
   },
 ];
 
+let questions = question.sort(function (a, b) {
+  return 0.5 - Math.random();
+});
+
 // the current state
 let answersGiven = new Array(questions.length).fill(null);
 let currentQuestion = -1;
+let username;
 
 //all the elements
 const questionElement = document.getElementById("question");
@@ -100,7 +105,42 @@ const startElement = document.getElementsByClassName("start");
 const quizElement = document.getElementsByClassName("quiz");
 const resultElement = document.getElementsByClassName("result");
 const infoElement = document.getElementById("info");
-const scoreElement = document.getElementById("score");
+const timeTakenElement = document.getElementById("timeTaken");
+const nameForm = document.getElementsByTagName("form");
+const gridElement = document.getElementById("grid");
+const gridButtons = document.getElementsByClassName("gridButton");
+const informationElement = document.getElementById("information");
+const gridButtonContainer = document.getElementById("gridButtonContainer");
+const minute = document.getElementById("minute");
+const second = document.getElementById("second");
+const highestScoreElement = document.getElementById("highestScore");
+
+let timer;
+let totalTime;
+const startTimer = () => {
+  totalTime = 120;
+  timer = setInterval(() => {
+    totalTime--;
+    if (totalTime === 0) {
+      // clearInterval(timer);
+      endQuiz();
+    }
+    minute.textContent = Math.floor(totalTime / 60);
+    second.textContent = Math.floor(totalTime % 60);
+  }, 1000);
+};
+// startTimer();
+
+const addButtonToGrid = () => {
+  let button = "";
+  questions.forEach((ques, index) => {
+    button += `<button class="gridButton" onclick="gotoQues(${index})" >${
+      index + 1
+    }</button>`;
+  });
+  gridButtonContainer.innerHTML = button;
+};
+addButtonToGrid();
 
 // to store the answer given
 const mark = (number) => {
@@ -112,13 +152,19 @@ const mark = (number) => {
 
 // to show the question every time something changes
 const showQues = () => {
-  questionElement.textContent = questions[currentQuestion].ques;
+  questionElement.textContent =
+    `${currentQuestion + 1}). ` + questions[currentQuestion].ques;
   let optionsContent = "";
   let message = "";
   questions[currentQuestion].options.forEach((option, index) => {
     if (answersGiven[currentQuestion] !== null) {
       let classes;
       let select = false;
+      if (answersGiven[currentQuestion] === questions[currentQuestion].answer) {
+        gridButtons[currentQuestion].classList.add("green");
+      } else {
+        gridButtons[currentQuestion].classList.add("red");
+      }
       if (answersGiven[currentQuestion] === index) {
         classes = "red";
         select = true;
@@ -149,15 +195,31 @@ const restart = () => {
   startElement[0].classList.remove("none");
   quizElement[0].classList.add("none");
   resultElement[0].classList.add("none");
+  informationElement.classList.remove("none");
+  gridButtonContainer.classList.add("none");
+  questions = question.sort(function (a, b) {
+    return 0.5 - Math.random();
+  });
+  addButtonToGrid();
+  minute.textContent = "2";
+  second.textContent = "00";
 };
 
 // to start the quiz
-const startQuiz = () => {
+const startQuiz = (event) => {
+  event.preventDefault();
+  username = event.target[0].value;
   currentQuestion = 0;
+  informationElement.classList.add("none");
+  gridButtonContainer.classList.remove("none");
   startElement[0].classList.add("none");
   quizElement[0].classList.remove("none");
   showQues();
+  startTimer();
 };
+
+// eventListener for form event
+nameForm[0].addEventListener("submit", startQuiz);
 
 // to move to next Ques
 nextQues = () => {
@@ -174,16 +236,77 @@ previousQues = () => {
   showQues();
 };
 
+// to go to a specific question number
+gotoQues = (number) => {
+  currentQuestion = number;
+  showQues();
+};
+
 // to end the quiz and get the results
 const endQuiz = () => {
+  clearInterval(timer);
   let score = 0;
   questions.forEach((ques, index) => {
     if (ques.answer === answersGiven[index]) {
       score++;
     }
   });
-  infoElement.textContent = "Your score is";
-  scoreElement.textContent = score + "/" + questions.length;
+  infoElement.textContent =
+    username + ", your score is " + score + "/" + questions.length;
+  timeTakenElement.textContent =
+    "Time taken by you is " +
+    Math.floor((120 - totalTime) / 60) +
+    ":" +
+    Math.floor((120 - totalTime) % 60);
+
   quizElement[0].classList.add("none");
   resultElement[0].classList.remove("none");
+  let highestScore;
+  if (localStorage.getItem("highestScore")) {
+    highestScore = JSON.parse(localStorage.getItem("highestScore"));
+    if (highestScore.score < score) {
+      highestScore = {
+        score,
+        time: 120 - totalTime,
+        name: username,
+        date: Date.now(),
+      };
+      localStorage.setItem("highestScore", JSON.stringify(highestScore));
+    } else if (highestScore.score === score) {
+      if (highestScore.time >= 120 - totalTime) {
+        highestScore = {
+          score,
+          time: 120 - totalTime,
+          name: username,
+          date: Date.now(),
+        };
+        localStorage.setItem("highestScore", JSON.stringify(highestScore));
+      }
+    }
+  } else {
+    highestScore = {
+      score,
+      time: 120 - totalTime,
+      name: username,
+      date: Date.now(),
+    };
+    localStorage.setItem("highestScore", JSON.stringify(highestScore));
+  }
+  let date = new Date(highestScore.date);
+  dateFormat =
+    date.getDate() +
+    "/" +
+    date.getMonth() +
+    "/" +
+    date.getFullYear() +
+    " " +
+    date.getHours() +
+    ":" +
+    date.getMinutes();
+  highestScoreElement.innerHTML = `<div><b>Highest Score: </b></div><div>${
+    highestScore.score
+  }/${questions.length} by ${highestScore.name} in time ${Math.floor(
+    highestScore.time / 60
+  )}:${highestScore.time % 60} <br/> on ${dateFormat}</div>`;
+  console.log(highestScore);
 };
